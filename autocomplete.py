@@ -1,3 +1,14 @@
+#UNIVERSIDADE FEDERAL DO RIO GRANDE DO NORTE
+#CENTRO DE TECNOLOGIA
+#DEPARTAMENTO DE ENGENHARIA DE COMPUTAÇÃO E AUTOMAÇÃO
+#DCA0209 - ALGORITMOS E ESTRUTURAS DE DADOS II
+
+#Bruno Valniery Gomes de Sousa
+
+#Desafio: Autocompletar Palavras
+#Objetivo: Criar um sistema de autocompletar palavras usando uma árvore AVL.
+#Como exe
+
 # Implementação da Árvore AVL
 
 class Node:
