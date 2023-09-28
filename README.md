@@ -11,3 +11,9 @@ Nesse desafio, o objetivo é criar um sistema de autocompletar palavras usando u
 
 Projeto: https://github.com/brunovalniery/aed2/blob/main/autocomplete.py
 Solução e resultados: https://youtu.be/912rFoDEa1A
+
+# Trabalho: Construindo Consultas Rápidas em um CSV
+Este projeto tem como objetivo estender o projeto guiado da Dataquest "Building Fast Queries on a CSV", disponível em: https://app.dataquest.io/c/86/m/481/guided-project%3A-building-fast-queries-on-a-csv/1/the-dat aset
+
+Projeto: 
+Vídeo:
