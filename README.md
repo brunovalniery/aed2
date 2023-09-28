@@ -9,11 +9,11 @@ Sou Bruno Valniery Gomes de Sousa, aluno do curso de Engenharia de Computação 
 # Desafio: Autocompletar Palavras
 Nesse desafio, o objetivo é criar um sistema de autocompletar palavras usando uma árvore AVL. Para usar, deve ser carregado um corpus (conjunto de textos) para a aplicação e adotado um prefixo, assim uma função que percorre a árvore AVL e retorna palavras que começam com o prefixo inserido.
 
-Projeto: https://github.com/brunovalniery/aed2/blob/main/autocomplete.py
-Solução e resultados: https://youtu.be/912rFoDEa1A
+* Projeto: <https://github.com/brunovalniery/aed2/blob/main/autocomplete.py>
+* Solução e resultados: <https://youtu.be/912rFoDEa1A>
 
 # Trabalho: Construindo Consultas Rápidas em um CSV
-Este projeto tem como objetivo estender o projeto guiado da Dataquest "Building Fast Queries on a CSV", disponível em: https://app.dataquest.io/c/86/m/481/guided-project%3A-building-fast-queries-on-a-csv/1/the-dat aset
+Este projeto tem como objetivo estender o projeto guiado da Dataquest "Building Fast Queries on a CSV", disponível em: <https://app.dataquest.io/c/86/m/481/guided-project%3A-building-fast-queries-on-a-csv/1/the-dataset>, com implementação de funcionalidades adicionais e análise da complexidade dos algoritmos implementados, considerando os aspectos de Big O, Big θ (Theta), e Big Ω (Omega).
 
-Projeto: 
-Vídeo:
+* Projeto: <https://github.com/brunovalniery/aed2/blob/main/consultacsv.py>
+* Vídeo: <https://youtu.be/ZSyjb9p7Zic>
