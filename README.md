@@ -17,3 +17,9 @@ Este projeto tem como objetivo estender o projeto guiado da Dataquest "Building 
 
 * Projeto: <https://github.com/brunovalniery/aed2/blob/main/consultacsv.py>
 * Vídeo: <https://youtu.be/ZSyjb9p7Zic>
+
+# Trabalho: Aplicação do conhecimento sobre grafos/redes com o jogo F1 Clash
+Implementar o conhecimento da semana 5 no contexto apresentado do jogo F1 Clash, utilizando como referência os elementos componentes do veículo (cards), pontuação dos pilotos, e garrafinhas (boost).
+
+* Projeto: <https://github.com/brunovalniery/aed2/blob/main/f1clash.py>
+* Vídeo: <https://youtu.be/>
