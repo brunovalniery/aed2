@@ -1,0 +1,6 @@
+The following networks were chosen to work with:
+1. Citation networks : nodes represent papers, edges represent citations
+2. Collaboration networks : nodes represent scientists, edges represent collaborations (co-authoring a paper)
+3. Online communities : data from online communities such as Reddit and Flickr
+4. User actions : actions of users on social platforms.
+5. Graph classification datasets : disjoint graphs from different classes
