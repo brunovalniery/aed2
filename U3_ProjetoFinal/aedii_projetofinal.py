@@ -46,10 +46,10 @@ def calculate_edge_length(graph, edge):
     coordinates_u = graph.nodes[u]['y'], graph.nodes[u]['x']
     coordinates_v = graph.nodes[v]['y'], graph.nodes[v]['x']
 
-    # Calcula a distância entre os dois pontos usando a fórmula de Haversine
-    length = ox.distance.great_circle_vec(coordinates_u, coordinates_v)
+    # Calcula a distância entre os dois pontos usando a biblioteca Geopy
+    distance = geodesic(coordinates_u, coordinates_v).meters
 
-    return length
+    return distance
 
 # Calcular o comprimento total das ruas na rede
 total_length = sum(calculate_edge_length(graph, edge) for edge in graph.edges(keys=True))
@@ -66,6 +66,12 @@ for node, centrality in betweenness_centrality.items():
     print(f"Nó {node}: {centrality}")
 
 
+# Calcule a centralidade de grau para cada nó no grafo
+degree_centrality = nx.degree_centrality(graph)
+
+# Imprima a centralidade de grau para cada nó
+for node, centrality in degree_centrality.items():
+    print(f"Nó {node}: {centrality}")
 # Calcule a centralidade de grau para cada nó no grafo
 degree_centrality = nx.degree_centrality(graph)
 
