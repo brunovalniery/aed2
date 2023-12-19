@@ -2,6 +2,8 @@
 
 O projeto final da unidade 3 consiste em aplicar o conhecimento visto durante o semestre com novas ferramentas e resolvendo problemas reais, como a análise de rede de ruas de Natal, Brasil, com OSMnx e NetworkX.
 
+### Link da apresentação: [vídeo](https://youtu.be/5KH7u75f7Zk)
+
 ### 1. Escolha das Cidades ou Áreas de Estudo:
 
     Foi escolhida a cidade de Natal para o projeto, pois apresenta desafios específicos em termos de mobilidade urbana.
@@ -29,7 +31,7 @@ O projeto final da unidade 3 consiste em aplicar o conhecimento visto durante o 
 
 3.3 Comprimento Total das Ruas:
 
-    Utilização das informações fornecidas pelo OSMnx ou calcule o comprimento total das ruas utilizando as coordenadas dos nós.
+    Utilização das informações fornecidas pelo OSMnx e uso do GeoPy para calcular o comprimento total das ruas utilizando as coordenadas dos nós.
 
 3.4 Medidas de Centralidade:
 
