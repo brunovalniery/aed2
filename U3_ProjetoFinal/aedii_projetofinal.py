@@ -23,11 +23,11 @@ place_name = 'Natal, Brazil'
 graph = ox.graph_from_place(place_name, network_type='all')
 
 # 3. Visualização da Rede:
-# Plote a rede de ruas utilizando Matplotlib.
+# Plote da rede de ruas utilizando Matplotlib.
 ox.plot_graph(ox.project_graph(graph))
 plt.show()
 
-# Calcular o número total de nós e arestas na rede
+# Cálculo do número total de nós e arestas na rede
 num_nodes = nx.number_of_nodes(graph)
 num_edges = nx.number_of_edges(graph)
 
@@ -41,40 +41,40 @@ print(f"Densidade da rede: {densidade}")
 
 # Função para calcular o comprimento de uma aresta em metros
 def calculate_edge_length(graph, edge):
-    # Extrai as coordenadas dos nós que formam a aresta
+    # Extração das coordenadas dos nós que formam a aresta
     u, v, key = edge
     coordinates_u = graph.nodes[u]['y'], graph.nodes[u]['x']
     coordinates_v = graph.nodes[v]['y'], graph.nodes[v]['x']
 
-    # Calcula a distância entre os dois pontos usando a biblioteca Geopy
+    # Cálculo da distância entre os dois pontos usando a biblioteca Geopy
     distance = geodesic(coordinates_u, coordinates_v).meters
 
     return distance
 
-# Calcular o comprimento total das ruas na rede
+# Cálculo do comprimento total das ruas na rede
 total_length = sum(calculate_edge_length(graph, edge) for edge in graph.edges(keys=True))
 
 print(f"Comprimento total das ruas na rede: {total_length:.2f} metros")
 
 
 
-# Calcule a centralidade de betweenness para cada nó no grafo
+# Cálculo da centralidade de betweenness para cada nó no grafo
 betweenness_centrality = nx.betweenness_centrality(graph)
 
-# Imprima a centralidade de betweenness para cada nó
+# Impressão a centralidade de betweenness para cada nó
 for node, centrality in betweenness_centrality.items():
     print(f"Nó {node}: {centrality}")
 
 
-# Calcule a centralidade de grau para cada nó no grafo
+# Cálculo da centralidade de grau para cada nó no grafo
 degree_centrality = nx.degree_centrality(graph)
 
-# Imprima a centralidade de grau para cada nó
+# Impressão da centralidade de grau para cada nó
 for node, centrality in degree_centrality.items():
     print(f"Nó {node}: {centrality}")
-# Calcule a centralidade de grau para cada nó no grafo
+# Cálculo da centralidade de grau para cada nó no grafo
 degree_centrality = nx.degree_centrality(graph)
 
-# Imprima a centralidade de grau para cada nó
+# Impressão da centralidade de grau para cada nó
 for node, centrality in degree_centrality.items():
     print(f"Nó {node}: {centrality}")
