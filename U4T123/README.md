@@ -21,6 +21,7 @@ O último projeto da disciplina é composto por um trabalho com os seguintes req
 ## 
 
 Para visualizar a implementação no Google Colab, acesse o seguinte [link](https://colab.research.google.com/drive/1P3Q0SCKvf_MtvntMhrL31yYDgoP0s1ep?usp=sharing).
+Vídeo da explicação: [link](https://youtu.be/TqU7g8tCuJw)
 
 ## 🦸 Autor
 
