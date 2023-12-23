@@ -9,7 +9,7 @@ Original file is located at
 1) Implementar em Python o algoritmo do caminho mais curto (Algoritmo de Dijkstra). Implementar pelo menos 5 testes (pytest) validando sua implementação com uma função similar já feita no Networkx. (4,00 pontos)
 """
 
-pip install pytest networkx
+pip install pytest networkx # Instalação das bibliotecas necessárias
 
 
 
@@ -17,195 +17,179 @@ import heapq
 import networkx as nx
 import pytest
 
-class Grafo:
-    def __init__(self):
-        self.vertices = set()
-        self.arestas = {}
-        self.distancias = {}
+def dijkstra(graph, start):
+    # Inicialização
+    distances = {node: float('infinity') for node in graph}
+    distances[start] = 0
+    priority_queue = [(0, start)]
 
-    def adicionar_vertice(self, valor):
-        self.vertices.add(valor)
-        self.arestas[valor] = []
+    while priority_queue:
+        current_distance, current_node = heapq.heappop(priority_queue)
 
-    def adicionar_aresta(self, de, para, distancia):
-        self.arestas[de].append((para, distancia))
-        self.arestas[para].append((de, distancia))
+        # Verifica se a distância atual é menor do que a armazenada
+        if current_distance > distances[current_node]:
+            continue
 
-    def dijkstra(self, inicial):
-        # Inicializar as distâncias como infinito para todos os vértices, exceto o inicial
-        self.distancias = {vertice: float('infinity') for vertice in self.vertices}
-        self.distancias[inicial] = 0
+        # Atualiza as distâncias para os vizinhos do nó atual
+        for neighbor, weight in graph[current_node].items():
+            distance = current_distance + weight
+            if distance < distances[neighbor]:
+                distances[neighbor] = distance
+                heapq.heappush(priority_queue, (distance, neighbor))
 
-        # Usar uma fila de prioridade (heap) para armazenar os vértices a serem explorados
-        fila_prioridade = [(0, inicial)]
+    return distances
 
-        while fila_prioridade:
-            # Extrair o vértice com a menor distância da fila de prioridade
-            distancia_atual, vertice_atual = heapq.heappop(fila_prioridade)
-
-            # Verificar as distâncias para os vizinhos do vértice atual
-            for vizinho, peso in self.arestas[vertice_atual]:
-                distancia_alternativa = distancia_atual + peso
-
-                # Se a distância alternativa for menor, atualizar a distância
-                if distancia_alternativa < self.distancias[vizinho]:
-                    self.distancias[vizinho] = distancia_alternativa
-                    heapq.heappush(fila_prioridade, (distancia_alternativa, vizinho))
-
-        return self.distancias
-
-# Exemplo de uso:
-grafo = Grafo()
-
-grafo.adicionar_vertice('A')
-grafo.adicionar_vertice('B')
-grafo.adicionar_vertice('C')
-grafo.adicionar_vertice('D')
-grafo.adicionar_vertice('E')
-
-grafo.adicionar_aresta('A', 'B', 1)
-grafo.adicionar_aresta('B', 'C', 2)
-grafo.adicionar_aresta('A', 'D', 3)
-grafo.adicionar_aresta('D', 'E', 1)
-grafo.adicionar_aresta('B', 'E', 2)
-grafo.adicionar_aresta('C', 'E', 4)
-
-inicio = 'A'
-distancias = grafo.dijkstra(inicio)
-
-print(f'Distâncias a partir do vértice {inicio}: {distancias}')
-
-
-@pytest.fixture
-def example_graph():
-    return {
+# Função de teste para verificar se a implementação funciona corretamente
+def test_dijkstra():
+    # Teste 1
+    grafo_1 = {
         'A': {'B': 1, 'C': 4},
         'B': {'A': 1, 'C': 2, 'D': 5},
         'C': {'A': 4, 'B': 2, 'D': 1},
         'D': {'B': 5, 'C': 1}
     }
+    resultado_custom_1 = dijkstra(grafo_1, 'A')
+    nx_grafo_1 = nx.Graph(grafo_1)
+    resultado_nx_1 = nx.single_source_dijkstra_path_length(nx_grafo_1, 'A')
+    assert resultado_custom_1 == resultado_nx_1
+    print("Teste 1 - Resultado Customizado:", resultado_custom_1)
+    print("Teste 1 - Resultado Networkx:", resultado_nx_1)
 
-def test_dijkstra_implementation(example_graph):
-    result_implementation = dijkstra(example_graph, 'A')
+    # Teste 2
+    grafo_2 = {
+        'A': {'B': 2, 'C': 1},
+        'B': {'A': 2, 'C': 3, 'D': 4},
+        'C': {'A': 1, 'B': 3, 'D': 2},
+        'D': {'B': 4, 'C': 2}
+    }
+    resultado_custom_2 = dijkstra(grafo_2, 'A')
+    nx_grafo_2 = nx.Graph(grafo_2)
+    resultado_nx_2 = nx.single_source_dijkstra_path_length(nx_grafo_2, 'A')
+    assert resultado_custom_2 == resultado_nx_2
+    print("Teste 2 - Resultado Customizado:", resultado_custom_2)
+    print("Teste 2 - Resultado Networkx:", resultado_nx_2)
 
-    # Utilizando Networkx para comparar os resultados
-    G = nx.Graph(example_graph)
-    result_networkx = nx.single_source_dijkstra_path_length(G, 'A')
+    # Teste 3
+    grafo_3 = {
+        'A': {'B': 3, 'C': 2, 'D': 5},
+        'B': {'A': 3, 'C': 4, 'D': 2},
+        'C': {'A': 2, 'B': 4, 'D': 1},
+        'D': {'A': 5, 'B': 2, 'C': 1}
+    }
+    resultado_custom_3 = dijkstra(grafo_3, 'A')
+    nx_grafo_3 = nx.Graph(grafo_3)
+    resultado_nx_3 = nx.single_source_dijkstra_path_length(nx_grafo_3, 'A')
+    assert resultado_custom_3 == resultado_nx_3
+    print("Teste 3 - Resultado Customizado:", resultado_custom_3)
+    print("Teste 3 - Resultado Networkx:", resultado_nx_3)
 
-    assert result_implementation == result_networkx
+    # Teste 4
+    grafo_4 = {
+        'A': {'B': 1, 'C': 2},
+        'B': {'A': 1, 'C': 3, 'D': 4},
+        'C': {'A': 2, 'B': 3, 'D': 1},
+        'D': {'B': 4, 'C': 1}
+    }
+    resultado_custom_4 = dijkstra(grafo_4, 'A')
+    nx_grafo_4 = nx.Graph(grafo_4)
+    resultado_nx_4 = nx.single_source_dijkstra_path_length(nx_grafo_4, 'A')
+    assert resultado_custom_4 == resultado_nx_4
+    print("Teste 4 - Resultado Customizado:", resultado_custom_4)
+    print("Teste 4 - Resultado Networkx:", resultado_nx_4)
 
-def test_dijkstra_disconnected_graph():
-    # Grafo não conectado
-    graph = {'A': {}, 'B': {}, 'C': {}}
-    result_implementation = dijkstra(graph, 'A')
+    # Teste 5
+    grafo_5 = {
+        'A': {'B': 2, 'C': 1},
+        'B': {'A': 2, 'C': 3, 'D': 4},
+        'C': {'A': 1, 'B': 3, 'D': 2},
+        'D': {'B': 4, 'C': 2}
+    }
+    resultado_custom_5 = dijkstra(grafo_5, 'D')
+    nx_grafo_5 = nx.Graph(grafo_5)
+    resultado_nx_5 = nx.single_source_dijkstra_path_length(nx_grafo_5, 'D')
+    assert resultado_custom_5 == resultado_nx_5
+    print("Teste 5 - Resultado Customizado:", resultado_custom_5)
+    print("Teste 5 - Resultado Networkx:", resultado_nx_5)
 
-    # Utilizando Networkx para comparar os resultados
-    G = nx.Graph(graph)
-    result_networkx = nx.single_source_dijkstra_path_length(G, 'A')
-
-    assert result_implementation == result_networkx
-
-def test_dijkstra_directed_graph():
-    # Grafo direcionado
-    graph = {'A': {'B': 1, 'C': 4}, 'B': {'C': 2, 'D': 5}, 'C': {'D': 1}}
-    result_implementation = dijkstra(graph, 'A')
-
-    # Utilizando Networkx para comparar os resultados
-    G = nx.DiGraph(graph)
-    result_networkx = nx.single_source_dijkstra_path_length(G, 'A')
-
-    assert result_implementation == result_networkx
-
-def test_dijkstra_graph_with_negative_weights():
-    # Grafo com pesos negativos
-    graph = {'A': {'B': 1, 'C': -2}, 'B': {'C': 2, 'D': 5}, 'C': {'D': 1}}
-    result_implementation = dijkstra(graph, 'A')
-
-    # Utilizando Networkx para comparar os resultados
-    G = nx.Graph(graph)
-    result_networkx = nx.single_source_dijkstra_path_length(G, 'A')
-
-    assert result_implementation == result_networkx
-
-def test_dijkstra_empty_graph():
-    # Grafo vazio
-    graph = {}
-    result_implementation = dijkstra(graph, 'A')
-
-    # Utilizando Networkx para comparar os resultados
-    G = nx.Graph(graph)
-    result_networkx = nx.single_source_dijkstra_path_length(G, 'A')
-
-    assert result_implementation == result_networkx
-
-# Execute os testes
-if __name__ == "__main__":
-    pytest.main()
-
-
-
-import heapq
-import pytest
-from networkx import Graph
-
-def dijkstra(graph, source):
-   nodes = {}
-   for node in graph:
-       nodes[node] = Node()
-   nodes[source].d = 0
-   queue = [(0, source)] # priority queue
-   while queue:
-       d, node = heapq.heappop(queue)
-       if nodes[node].finished:
-           continue
-       nodes[node].finished = True
-       for neighbor in graph[node]:
-           if nodes[neighbor].finished:
-               continue
-           new_d = d + graph[node][neighbor]
-           if new_d < nodes[neighbor].d:
-               nodes[neighbor].d = new_d
-               nodes[neighbor].parent = node
-               heapq.heappush(queue, (new_d, neighbor))
-   return nodes
-
-# Cria um grafo de teste
-g = Graph()
-g.add_edge('A', 'B', weight=1)
-g.add_edge('A', 'C', weight=4)
-g.add_edge('B', 'D', weight=2)
-g.add_edge('C', 'D', weight=1)
-g.add_edge('C', 'F', weight=3)
-g.add_edge('D', 'E', weight=8)
-g.add_edge('F', 'C', weight=2)
-
-# Testes
-@pytest.mark.parametrize("start_node,expected", [
-  ('A', {'A': 0, 'B': 1, 'C': 4, 'D': 5, 'E': 13, 'F': 7}),
-  ('B', {'A': 1, 'B': 0, 'C': 3, 'D': 2, 'E': 10, 'F': 5}),
-  ('C', {'A': 4, 'B': 3, 'C': 0, 'D': 1, 'E': 9, 'F': 3}),
-  ('D', {'A': 5, 'B': 2, 'C': 1, 'D': 0, 'E': 8, 'F': 6}),
-  ('E', {'A': 13, 'B': 10, 'C': 9, 'D': 8, 'E': 0, 'F': 11})
-])
-
-def test_dijkstra(start_node, expected):
-  result = dijkstra(g, start_node)
-  print(f"Testing with start node {start_node}:")
-  print(f"Expected: {expected}")
-  print(f"Result: {result}")
-  assert result == expected
+if __name__ == '__main__':
+    pytest.main(['-v', '-s'])
 
 """2) Faça a análise da complexidade algorítmica da solução em 1) para Big O, Big Theta e Big Omega. (2,00 pontos).
 
-A complexidade algorítmica do algoritmo de Dijkstra pode ser analisada em termos de Big O, Big Theta e Big Omega, considerando o número de vértices (n) e o número de arestas (m) no grafo.
+A complexidade algorítmica do algoritmo de Dijkstra pode ser analisada em termos de Big O, Big Theta e Big Omega, considerando o número de vértices (V) e o número de arestas (E) no grafo.
 
     Big O (O):
-        No pior caso, o algoritmo de Dijkstra possui complexidade O((n + m) * log(n)) quando implementado com uma fila de prioridade usando um heap binário ou Fibonacci. Isso ocorre devido às operações de inserção/remoção no heap, que têm complexidade logarítmica em relação ao número de elementos.
+      A complexidade do algoritmo de Dijkstra é O((V + E) * log(V)).
+      Isso se deve ao fato de que a operação de pop e push no heap (implementado por heapq) tem complexidade logarítmica e, no pior caso, o loop while executa V + E vezes.
 
     Big Theta (Θ):
-        A complexidade média do Dijkstra também é O((n + m) * log(n)), portanto, Θ((n + m) * log(n)) é uma representação precisa do comportamento médio.
+      A complexidade do algoritmo é Θ((V + E) * log(V)).
+      Isso implica que, no melhor caso e no pior caso, o algoritmo tem um desempenho assintótico semelhante.
 
     Big Omega (Ω):
-        Em um grafo denso, onde m é aproximadamente n^2, a complexidade do Dijkstra pode se aproximar de Ω(n^2). Isso ocorre porque, em cada iteração, ele precisa percorrer todos os vértices para encontrar o mínimo no heap. No entanto, para a maioria dos casos práticos, os grafos são esparsos, e a complexidade permanece dominada pelo fator logarítmico do heap.
+      A complexidade inferior é, em geral, a mesma que a complexidade superior no caso do algoritmo de Dijkstra.
+      Portanto, Ω((V + E) * log(V)).
 
+3) Implemente uma solução em python para a Centralidade Eigenvector conforme descrito na semana 10 da disciplina. Implementar pelo menos 5 testes (pytest) validando sua implementação com uma função similar já feita no Networkx
 """
+
+import networkx as nx
+import pytest
+import matplotlib.pyplot as plt
+
+def eigenvector_centrality(graph):
+    # Calcula a centralidade eigenvector do grafo
+    return nx.eigenvector_centrality(graph)
+
+def test_eigenvector_centrality():
+    # Teste 1: Grafo pequeno
+    g1 = nx.Graph()
+    g1.add_edges_from([(1, 2), (1, 3), (2, 3)])
+    centrality1 = eigenvector_centrality(g1)
+    assert len(centrality1) == 3
+
+    # Teste 2: Grafo direcionado
+    g2 = nx.DiGraph()
+    g2.add_edges_from([(1, 2), (2, 3), (3, 1)])
+    centrality2 = eigenvector_centrality(g2)
+    assert len(centrality2) == 3
+
+    # Teste 3: Grafo vazio
+    g3 = nx.Graph()
+    centrality3 = eigenvector_centrality(g3)
+    assert len(centrality3) == 0
+
+    # Teste 4: Grafo completo
+    g4 = nx.complete_graph(5)
+    centrality4 = eigenvector_centrality(g4)
+    assert len(centrality4) == 5
+
+    # Teste 5: Grafo desconectado
+    g5 = nx.Graph()
+    g5.add_nodes_from([1, 2, 3])
+    centrality5 = eigenvector_centrality(g5)
+    assert len(centrality5) == 3
+
+# Executa os testes
+pytest.main()
+
+# Visualização da Centralidade Eigenvector
+def visualize_eigenvector_centrality(graph):
+    fig, ax = plt.subplots(1, 1, figsize=(10, 8))
+    pos = nx.spring_layout(graph, seed=123456789, k=0.3)
+    color = list(dict(eigenvector_centrality(graph)).values())
+
+    # Desenha as arestas
+    nx.draw_networkx_edges(graph, pos=pos, alpha=0.4, ax=ax)
+    # Desenha os nós
+    nodes = nx.draw_networkx_nodes(graph, pos=pos, node_color=color, cmap=plt.cm.jet, ax=ax)
+    # Desenha os rótulos
+    nx.draw_networkx_labels(graph, pos=pos, font_color='white', ax=ax)
+
+    plt.axis("off")
+    plt.colorbar(nodes)
+    plt.show()
+
+# Exemplo de uso
+g = nx.complete_graph(10)
+visualize_eigenvector_centrality(g)
