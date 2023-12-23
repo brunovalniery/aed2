@@ -1,6 +1,6 @@
 ## 💻 Sobre
 
-O projeto 
+O último projeto da disciplina é composto por um trabalho com os seguintes requisitos:
 
 ## 1) Algoritmo do Caminho Mais Curto (Dijkstra)
 
